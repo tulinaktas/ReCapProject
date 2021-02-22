@@ -6,26 +6,23 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
         ICarDal _carDal;
-        IBrandDal _brandDal;
         
-        public CarManager(ICarDal carDal, IBrandDal brandDal)
+        public CarManager(ICarDal carDal)
         {
             _carDal = carDal;
-            _brandDal = brandDal; //arabanın ismini ogrenmek icin db brand baglantısını kullanacagız
         }
         public void Add(Car car)
         {
-            var carBrandName = _brandDal.Get(p => p.BrandId == car.BrandId).BrandName; // araba ismini bulduk
-            
             //iş kuralları -- business
             //araba ismi min 2 harf ve gunluk fiyatı 0dan buyuk olmalı
-            if (car.DailyPrice > 0 && carBrandName.Length>=2)
+            if (car.DailyPrice > 0 && car.Description.Length>=2)
             {
                 _carDal.Add(car);
             }
@@ -48,17 +45,22 @@ namespace Business.Concrete
 
         public Car GetById(int id)
         {
-            return _carDal.Get(p=>p.CarId == id);
+            return _carDal.Get(c=>c.CarId == id);
         }
 
         public List<Car> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetAll(p => p.BrandId ==brandId);//brandIdsi gonderilen idye eşit olan araclar
+            return _carDal.GetAll(b => b.BrandId ==brandId);//brandIdsi gonderilen idye eşit olan araclar
         }
 
         public List<Car> GetCarsByColorId(int colorId)
         {
-            return _carDal.GetAll(p => p.ColorId == colorId);//colorIdsi gonderilen idye eşit olan araclar
+            return _carDal.GetAll(c => c.ColorId == colorId);//colorIdsi gonderilen idye eşit olan araclar
+        }
+
+        public List<CarDetailsDto> GetCarsDetails() //dto olarak olusturdugumuz joinden arabanın marka adı ve renk adı da gelecek.
+        {
+            return _carDal.GetCarsDetails();
         }
 
         public void Update(Car car)

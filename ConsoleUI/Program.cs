@@ -11,12 +11,116 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new EfCarDal(),new EfBrandDal());
+            CarManager carManager = new CarManager(new EfCarDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
 
+            //CarCrudTest(carManager);
+            //ColorCrudTest(colorManager);
+            //BrandCrudTest(brandManager);
+
+            // -- DTO DENEME
+
+            foreach (var car in carManager.GetCarsDetails())
+            {
+                Console.WriteLine("{0}/{1}/{2}/{3}",car.BrandName,car.ColorName,car.CarName,car.DailyPrice);
+            }
+            
+
+            //Test(carManager);
+            //InMemorydeCalisma();
+            //AddTest(carManager, car1);
+            //DeleteTest(carManager, car1);
+            //UpdateTest(carManager);
+            ////GetByIdTest(carManager);
+        }
+
+        private static void BrandCrudTest(BrandManager brandManager)
+        {
+            Brand brand1 = new Brand() { BrandName = "deneme" };
+
+            brandManager.Add(brand1);
+            foreach (var brand in brandManager.GetAll())
+            {
+                Console.WriteLine(brand.BrandName);
+            }
+            brandManager.Update(new Brand() { BrandId = 1002, BrandName = "deneme degisti" });
+            foreach (var brand in brandManager.GetAll())
+            {
+                Console.WriteLine(brand.BrandName);
+            }
+            brandManager.Delete(new Brand() { BrandId = 1002 });
+            foreach (var brand in brandManager.GetAll())
+            {
+                Console.WriteLine(brand.BrandName);
+            }
+        }
+
+        private static void ColorCrudTest(ColorManager colorManager)
+        {
+            Console.WriteLine(colorManager.GetById(5));
+            Color color1 = new Color()
+            {
+                ColorName = "Dark Green"
+            };
+            Console.WriteLine("Renk ekleme");
+            colorManager.Add(color1);
+            foreach (var color in colorManager.GetAll())
+            {
+                Console.WriteLine(color.ColorName);
+            }
+            Console.WriteLine("Renk guncelleme islemi");
+            colorManager.Update(new Color { ColorId = 1002, ColorName = "deneme" });
+            foreach (var color in colorManager.GetAll())
+            {
+                Console.WriteLine(color.ColorName);
+            }
+            Console.WriteLine("Renk silme islemi");
+            colorManager.Delete(new Color { ColorId = 1002 });
+            foreach (var color in colorManager.GetAll())
+            {
+                Console.WriteLine(color.ColorName);
+            }
+        }
+
+        private static void CarCrudTest(CarManager carManager)
+        {
+            Console.WriteLine(carManager.GetById(6).Description);
+
+            Car car1 = new Car()
+            {
+                BrandId = 3,
+                ColorId = 9,
+                DailyPrice = 120,
+                Description = "Fiat marka gri araba",
+                ModelYear = "2021"
+            };
+            Console.WriteLine("Araba ekleme islemi");
+            carManager.Add(car1);
+            foreach (var car in carManager.GetAll())
+            {
+                Console.WriteLine(car.Description);
+            }
+            Console.WriteLine("Araba guncelleme islemi");
+            carManager.Update(new Car { CarId = 16, BrandId = 2, ColorId = 1, DailyPrice = 130, Description = "deneme", ModelYear = "2016" });
+            foreach (var car in carManager.GetAll())
+            {
+                Console.WriteLine(car.Description);
+            }
+            Console.WriteLine("Araba silme islemi");
+            carManager.Delete(new Car { CarId = 16 });
+            foreach (var car in carManager.GetAll())
+            {
+                Console.WriteLine(car.Description);
+            }
+        }
+
+        private static void Test(CarManager carManager)
+        {
             List<Car> cars = carManager.GetAll();
             foreach (var car in cars)
             {
-               Console.WriteLine(car.Description);
+                Console.WriteLine(car.Description);
             }
 
             List<Car> sameBrandCars = carManager.GetCarsByBrandId(8);
@@ -27,15 +131,12 @@ namespace ConsoleUI
 
             carManager.Add(new Car() // hata veriyor
             {
-               BrandId = 1, ColorId = 9, DailyPrice= 0, Description ="BMW marka gri araba", ModelYear = "2013"
+                BrandId = 1,
+                ColorId = 9,
+                DailyPrice = 0,
+                Description = "BMW marka gri araba",
+                ModelYear = "2013"
             });
-
-
-            //InMemorydeCalisma();
-            //AddTest(carManager, car1);
-            //DeleteTest(carManager, car1);
-            //UpdateTest(carManager);
-            ////GetByIdTest(carManager);
         }
 
         private static void InMemorydeCalisma()

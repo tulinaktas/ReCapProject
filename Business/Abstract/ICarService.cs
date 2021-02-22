@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,5 +15,6 @@ namespace Business.Abstract
         Car GetById(int id); //idye gore arac getirme
         List<Car> GetCarsByBrandId(int brandId); //brandIdye gore aracları getirme
         List<Car> GetCarsByColorId(int colorId); //colorIdye gore aracları getirme
+        List<CarDetailsDto> GetCarsDetails();
     }
 }
