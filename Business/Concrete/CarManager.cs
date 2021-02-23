@@ -7,6 +7,8 @@ using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
 using Entities.DTOs;
+using Core.Utilities.Results;
+using Business.Constant;
 
 namespace Business.Concrete
 {
@@ -18,54 +20,54 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             //iş kuralları -- business
             //araba ismi min 2 harf ve gunluk fiyatı 0dan buyuk olmalı
-            if (car.DailyPrice > 0 && car.Description.Length>=2)
+            if (car.DailyPrice < 0 && car.Description.Length>=2)
             {
-                _carDal.Add(car);
-            }
-            else
-            {
-                throw new Exception("The daily price cannot be zero");
+                return new ErrorResult();
             }
 
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
-            return _carDal.Get(c=>c.CarId == id);
+            return new SuccessDataResult<Car>(_carDal.Get(c=>c.CarId == id));
         }
 
-        public List<Car> GetCarsByBrandId(int brandId)
+        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetAll(b => b.BrandId ==brandId);//brandIdsi gonderilen idye eşit olan araclar
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(b => b.BrandId ==brandId));//brandIdsi gonderilen idye eşit olan araclar
         }
 
-        public List<Car> GetCarsByColorId(int colorId)
+        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
         {
-            return _carDal.GetAll(c => c.ColorId == colorId);//colorIdsi gonderilen idye eşit olan araclar
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));//colorIdsi gonderilen idye eşit olan araclar
         }
 
-        public List<CarDetailsDto> GetCarsDetails() //dto olarak olusturdugumuz joinden arabanın marka adı ve renk adı da gelecek.
+        public IDataResult<List<CarDetailsDto>> GetCarsDetails() //dto olarak olusturdugumuz joinden arabanın marka adı ve renk adı da gelecek.
         {
-            return _carDal.GetCarsDetails();
+            return new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetCarsDetails());
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
-            _carDal.Update(car);
+           _carDal.Update(car);
+           return new SuccessResult(Messages.CarUpdated);
         }
     }
 }
