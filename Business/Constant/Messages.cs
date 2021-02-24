@@ -18,5 +18,8 @@ namespace Business.Constant
         public static string BrandDeleted = "Successfully deleted brand ";
         public static string BrandUpdated = "Successfully updated brand ";
 
+        public static string InvalidRental = "This car is not currently available";
+        public static string RentalAdded = "This car is avaible now. Car rental successful";
+
     }
 }
