@@ -21,7 +21,7 @@ namespace ConsoleUI
 
          
 
-            //RentalAddTest(rentalManager); --> daha sonra iyileştireceğim
+            RentalAddTest(rentalManager); //--> daha sonra iyileştireceğim
             //UserAddTest(userManager);
             //CustomerAddTest(customerManager);
 
@@ -46,9 +46,8 @@ namespace ConsoleUI
             var result = rentalManager.Add(new Rental()
             {
                 CarId = 10,
-                CustomerId = 1,
-                RentDate = DateTime.Now,
-                ReturnDate = new DateTime(2021, 2, 26)
+                CustomerId = 2,
+                RentDate = DateTime.Now
             });
             Console.WriteLine(result.Message);
         }
