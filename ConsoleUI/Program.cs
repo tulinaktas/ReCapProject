@@ -21,7 +21,7 @@ namespace ConsoleUI
 
          
 
-            RentalAddTest(rentalManager); //--> daha sonra iyileştireceğim
+            //RentalAddTest(rentalManager); //--> daha sonra iyileştireceğim
             //UserAddTest(userManager);
             //CustomerAddTest(customerManager);
 

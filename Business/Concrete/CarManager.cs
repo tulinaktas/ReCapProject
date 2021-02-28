@@ -26,7 +26,7 @@ namespace Business.Concrete
             //araba ismi min 2 harf ve gunluk fiyatı 0dan buyuk olmalı
             if (car.DailyPrice < 0 && car.Description.Length>=2)
             {
-                return new ErrorResult();
+                return new ErrorResult(Messages.InvalidCarAdded);
             }
 
             _carDal.Add(car);
@@ -41,12 +41,12 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarListed);
         }
 
         public IDataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c=>c.CarId == id));
+            return new SuccessDataResult<Car>(_carDal.Get(c=>c.CarId == id),Messages.CarById);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
