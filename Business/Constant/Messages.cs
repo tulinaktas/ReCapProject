@@ -38,7 +38,7 @@ namespace Business.Constant
         public static string RentalDeleted = "Successfully deleted rental ";
         public static string RentalUpdated = "Successfully updated rental ";
         public static string InvalidRental = "This car is not currently available";
-        public static string RentalAdded = "This car is avaible now. Car rental successful";
+        public static string RentalAdded = "This car is available now. Car rental successful";
         public static string RentalListed = "Rentals are listed";
 
     }

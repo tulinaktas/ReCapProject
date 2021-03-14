@@ -9,6 +9,9 @@ using System.Linq.Expressions;
 using Entities.DTOs;
 using Core.Utilities.Results;
 using Business.Constant;
+using Core.CrossCuttingConcerns.Validation;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Validation;
 
 namespace Business.Concrete
 {
@@ -20,15 +23,12 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+        
+        [ValidationAspect(typeof (CarValidator))]
         public IResult Add(Car car)
         {
             //iş kuralları -- business
             //araba ismi min 2 harf ve gunluk fiyatı 0dan buyuk olmalı
-            if (car.DailyPrice < 0 && car.Description.Length>=2)
-            {
-                return new ErrorResult(Messages.InvalidCarAdded);
-            }
-
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
