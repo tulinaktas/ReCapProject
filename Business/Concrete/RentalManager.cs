@@ -20,6 +20,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
+            //rental.RentDate = DateTime.Now;
             var rentedCars = _rentalDal.GetAll(r => r.CarId == rental.CarId);
 
             foreach (var car in rentedCars)
