@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constant
@@ -41,5 +43,9 @@ namespace Business.Constant
         public static string RentalAdded = "This car is available now. Car rental successful";
         public static string RentalListed = "Rentals are listed";
 
+        public static string UserExists = "User already exists to system";
+        public static string UserNotFound = "User not found to system";
+        public static string BadPassword = "Entered the not correct password";
+        public static string NotBeAuth = "You are not authorized";
     }
 }
