@@ -74,7 +74,7 @@ namespace ConsoleUI
             }
         }
 
-        private static void UserAddTest(UserManager userManager)
+       /* private static void UserAddTest(UserManager userManager)
         {
             userManager.Add(new User()
             {
@@ -84,7 +84,7 @@ namespace ConsoleUI
                 Password = "1234567"
             });
         }
-
+       */
         private static void BrandCrudTest(BrandManager brandManager)
         {
             Brand brand1 = new Brand() { BrandName = "deneme" };
