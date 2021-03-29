@@ -23,8 +23,8 @@ namespace Business.Concrete
 
         public IResult UserExists(string email)
         {
-            var result = _userService.GetUserByEmail(email);
-            if (result.Success)
+            var result = _userService.GetUserByEmail(email).Data;
+            if (result != null)
             {
                 return new ErrorResult(Messages.UserExists);
             }
