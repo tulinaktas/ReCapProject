@@ -47,5 +47,7 @@ namespace Business.Constant
         public static string UserNotFound = "User not found to system";
         public static string BadPassword = "Entered the not correct password";
         public static string NotBeAuth = "You are not authorized";
+
+        public static string SameBrandCarsCountExceeded = "The number of car with the same brand is too many, you cannot add car of this brand";
     }
 }

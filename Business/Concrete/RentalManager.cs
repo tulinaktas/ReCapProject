@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac;
 using Business.Constant;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,9 +19,9 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
+        [SecuredOperation("admin,rental.add")]
         public IResult Add(Rental rental)
         {
-            //rental.RentDate = DateTime.Now;
             var rentedCars = _rentalDal.GetAll(r => r.CarId == rental.CarId);
 
             foreach (var car in rentedCars)
@@ -30,6 +31,7 @@ namespace Business.Concrete
                     return new ErrorResult(Messages.InvalidRental);
                 }
             }
+            rental.RentDate = DateTime.Now;
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
