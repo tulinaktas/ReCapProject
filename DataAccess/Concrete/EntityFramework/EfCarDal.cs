@@ -22,15 +22,12 @@ namespace DataAccess.Concrete.EntityFramework
                              join brand in context.Brands on car.BrandId equals brand.BrandId
                              select new CarDetailsDto
                              {
+                                 Id =car.CarId,
                                  CarName = car.Description,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
                                  ModelYear = car.ModelYear,
-                                 DailyPrice = car.DailyPrice,
-                                 ImagePath = (
-                                 from carimage in context.CarImages
-                                 where carimage.CarId == car.CarId select carimage.ImagePath
-                                 ).FirstOrDefault()                                
+                                 DailyPrice = car.DailyPrice                            
                              };
 
                 return result.ToList();
@@ -46,16 +43,12 @@ namespace DataAccess.Concrete.EntityFramework
                              where color.ColorId == colorId
                              select new CarDetailsDto
                              {
+                                 Id = car.CarId,
                                  CarName = car.Description,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
                                  ModelYear = car.ModelYear,
-                                 DailyPrice = car.DailyPrice,
-                                 ImagePath = (
-                                 from carimage in context.CarImages
-                                 where carimage.CarId == car.CarId
-                                 select carimage.ImagePath
-                                 ).FirstOrDefault()
+                                 DailyPrice = car.DailyPrice
                              };
 
                 return result.ToList();
@@ -72,19 +65,38 @@ namespace DataAccess.Concrete.EntityFramework
                              where brand.BrandId == brandId
                              select new CarDetailsDto
                              {
+                                 Id = car.CarId,
                                  CarName = car.Description,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
                                  ModelYear = car.ModelYear,
-                                 DailyPrice = car.DailyPrice,
-                                 ImagePath = (
-                                 from carimage in context.CarImages
-                                 where carimage.CarId == car.CarId
-                                 select carimage.ImagePath
-                                 ).FirstOrDefault()
+                                 DailyPrice = car.DailyPrice
                              };
 
                 return result.ToList();
+            }
+        }
+
+
+        public CarDetailsDto GetCarDetailsById(int carId)
+        {
+            using (ReCapContext context = new ReCapContext())
+            {
+                var result = from car in context.Cars
+                             join color in context.Colors on car.ColorId equals color.ColorId
+                             join brand in context.Brands on car.BrandId equals brand.BrandId
+                             where car.CarId == carId
+                             select new CarDetailsDto
+                             {
+                                 Id = car.CarId,
+                                 CarName = car.Description,
+                                 BrandName = brand.BrandName,
+                                 ColorName = color.ColorName,
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice
+                             };
+
+                return result.SingleOrDefault();
             }
         }
     }
