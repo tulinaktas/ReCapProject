@@ -25,7 +25,12 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = car.Description,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
-                                 DailyPrice = car.DailyPrice
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 ImagePath = (
+                                 from carimage in context.CarImages
+                                 where carimage.CarId == car.CarId select carimage.ImagePath
+                                 ).FirstOrDefault()                                
                              };
 
                 return result.ToList();
@@ -44,7 +49,13 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = car.Description,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
-                                 DailyPrice = car.DailyPrice
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 ImagePath = (
+                                 from carimage in context.CarImages
+                                 where carimage.CarId == car.CarId
+                                 select carimage.ImagePath
+                                 ).FirstOrDefault()
                              };
 
                 return result.ToList();
@@ -64,7 +75,13 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = car.Description,
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
-                                 DailyPrice = car.DailyPrice
+                                 ModelYear = car.ModelYear,
+                                 DailyPrice = car.DailyPrice,
+                                 ImagePath = (
+                                 from carimage in context.CarImages
+                                 where carimage.CarId == car.CarId
+                                 select carimage.ImagePath
+                                 ).FirstOrDefault()
                              };
 
                 return result.ToList();

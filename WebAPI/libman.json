@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "filesystem",
+  "libraries": [
+    {
+      "library": "CarImages/",
+      "destination": "wwwroot/CarImages"
+    }
+  ]
+}

@@ -20,14 +20,14 @@ namespace Core.Utilities.Helpers
                 }
             }
             var fileNewPath = newPath(file);
-            File.Move(tempPath, fileNewPath);
-            return fileNewPath;
+            File.Move(tempPath, fileNewPath.path2);
+            return fileNewPath.path;
         }
         public static IResult Delete(string path)
         {
             try
             {
-                File.Delete(path);
+                File.Delete(Environment.CurrentDirectory + @"\wwwroot\CarImages\" + path);
             }
             catch (Exception)
             {
@@ -38,26 +38,20 @@ namespace Core.Utilities.Helpers
         }
         public static string Update(string updatedPath, IFormFile file)
         {
-            var path = newPath(file).ToString(); 
-            if (updatedPath.Length >0)
-            {
-                using (FileStream fileStream = new FileStream(path, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-            }
-            File.Delete(updatedPath);
-            return path;
+            File.Delete(Environment.CurrentDirectory + @"\wwwroot\CarImages\" + updatedPath);
+            var result = Add(file);
+            return result;
         }
 
-        public static string newPath(IFormFile file)
+        public static (string path,string path2) newPath(IFormFile file)
         {
             FileInfo fileInfo = new FileInfo(file.FileName);
             var fileExtension = fileInfo.Extension;
 
-            var currentLocation = Environment.CurrentDirectory + @"\CarImages\";
+            var currentLocation = Environment.CurrentDirectory + @"\wwwroot\CarImages\";
             var path = Guid.NewGuid().ToString() + fileExtension;
-            return currentLocation + path;
+            var path2 = currentLocation + path;
+            return (path,path2);
         } 
 
     }
