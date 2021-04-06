@@ -93,7 +93,7 @@ namespace Business.Concrete
         }
         private List<CarImage> CheckIfCarPhotoIsNull(int carId)
         {
-            var defaultPath = @"C:\Users\tulin\source\repos\ReCapProject\WebAPI\CarImages\simge.jpg"; 
+            var defaultPath = @"simge.jpg"; 
             var result = _carImageDal.GetAll(c => c.CarId == carId);
             if (!result.Any())
             {
