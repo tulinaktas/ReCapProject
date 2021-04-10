@@ -49,5 +49,9 @@ namespace Business.Constant
         public static string NotBeAuth = "You are not authorized";
 
         public static string SameBrandCarsCountExceeded = "The number of car with the same brand is too many, you cannot add car of this brand";
+
+        public static string CreditCardAdded = "Successfully added credit card ";
+        public static string CreditCarDeleted = "Successfully deleted credit card ";
+        public static string CreditCardUpdated = "Successfully updated credit card ";
     }
 }

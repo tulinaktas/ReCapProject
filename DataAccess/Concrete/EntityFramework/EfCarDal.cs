@@ -96,7 +96,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  BrandName = brand.BrandName,
                                  ColorName = color.ColorName,
                                  ModelYear = car.ModelYear,
-                                 DailyPrice = car.DailyPrice
+                                 DailyPrice = car.DailyPrice,
+                                 ImagePath = context.CarImages.Where(c => c.CarId == car.CarId).FirstOrDefault().ImagePath
                              };
 
                 return result.SingleOrDefault();
