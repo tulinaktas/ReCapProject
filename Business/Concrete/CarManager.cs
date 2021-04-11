@@ -96,6 +96,15 @@ namespace Business.Concrete
            _carDal.Update(car);
            return new SuccessResult(Messages.CarUpdated);
         }
+        public IDataResult<CarDetailsDto> GetCarDetailsById(int carId)
+        {
+            return new SuccessDataResult<CarDetailsDto>(_carDal.GetCarDetailsById(carId));
+        }
+
+        public IDataResult<List<CarDetailsDto>> GetCarsDetailByColorIdAndBrandId(int colorId, int brandId)
+        {
+            return new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetCarsDetailByColorIdAndBrandId(colorId, brandId));
+        }
 
         private IResult CheckCountOfSameCarBrand(int brandId)
         {
@@ -105,16 +114,6 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.SameBrandCarsCountExceeded);
             }
             return new SuccessResult();
-        }
-
-        public IDataResult<CarDetailsDto> GetCarDetailsById(int carId)
-        {
-            return new SuccessDataResult<CarDetailsDto>(_carDal.GetCarDetailsById(carId));
-        }
-
-        public IDataResult<List<CarDetailsDto>> GetCarsDetailByColorIdAndBrandId(int colorId, int brandId)
-        {
-            return new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetCarsDetailByColorIdAndBrandId(colorId, brandId));
         }
     }
 }
