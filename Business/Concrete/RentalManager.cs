@@ -28,7 +28,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = BusinessRules.Run(RentControl(rental.RentDate, rental.ReturnDate), RentedCarBeenReturned(rental.Id));
+            var result = BusinessRules.Run(RentControl(rental.RentDate, rental.ReturnDate), RentedCarBeenReturned(rental.CarId,rental.RentDate));
 
             if (result != null)
             {
@@ -69,18 +69,18 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        private IResult RentedCarBeenReturned(int carId)
+        private IResult RentedCarBeenReturned(int carId, DateTime rentDate)
         {
             var rentedCar = _rentalDal.GetAll(r => r.CarId == carId).Any();
             if (rentedCar)
             {
-                var result = _rentalDal.Get(r => r.CarId == carId);
-                if (result.ReturnDate == null)
+                var result = _rentalDal.GetAll(r => r.CarId == carId).LastOrDefault();
+                int range = DateTime.Compare((DateTime)result.ReturnDate, rentDate); // <0 result.ReturnDate daha önce rentDateden
+                if (result.ReturnDate == null || range > 0)
                 {
                     return new ErrorResult(Messages.InvalidRental);
                 }
             }
-           
             return new SuccessResult();
         }
     }
