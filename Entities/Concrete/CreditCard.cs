@@ -13,7 +13,7 @@ namespace Entities.Concrete
         public string CardNumber { get; set; }
         public string ExpirationDate { get; set; }
         public int CVV { get; set; }
-        public int Amount { get; set; }
+        public decimal? Amount { get; set; }
 
     }
 }

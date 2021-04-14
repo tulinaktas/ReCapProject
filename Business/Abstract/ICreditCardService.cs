@@ -8,9 +8,9 @@ namespace Business.Abstract
 {
     public interface ICreditCardService
     {
-        Result Add(CreditCard creditCard);
-        Result Delete(CreditCard creditCard);
-        Result Update(CreditCard creditCard);
+        IResult Add(CreditCard creditCard);
+        IResult Delete(CreditCard creditCard);
+        IResult Update(CreditCard creditCard);
         IDataResult<CreditCard> GetByCustomerId(int customerId);
 
     }
