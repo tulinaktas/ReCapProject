@@ -42,6 +42,11 @@ namespace Business.Concrete
             return new SuccessDataResult<CreditCard>(_creditCardDal.Get(c => c.CustomerId == customerId));
         }
 
+        public IDataResult<CreditCard> GetByNumber(string cardNumber)
+        {
+            return new SuccessDataResult<CreditCard>(_creditCardDal.Get(c => c.CardNumber == cardNumber));
+        }
+
         private IResult CheckCreditCardExist(CreditCard creditCard)
         {
             var result = _creditCardDal.Get(

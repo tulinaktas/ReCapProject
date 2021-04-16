@@ -44,6 +44,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
+            builder.RegisterType<PaymentManager>().As<IPaymentService>();
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

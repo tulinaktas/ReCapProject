@@ -28,7 +28,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = BusinessRules.Run(RentControl(rental.RentDate, rental.ReturnDate), RentedCarBeenReturned(rental.CarId,rental.RentDate));
+            var result = BusinessRules.Run(RentControl(rental.RentDate, rental.ReturnDate), RentedCarBeenReturned(rental.CarId,rental.RentDate,rental.ReturnDate));
 
             if (result != null)
             {
@@ -69,17 +69,23 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        private IResult RentedCarBeenReturned(int carId, DateTime rentDate)
+        private IResult RentedCarBeenReturned(int carId, DateTime rentDate, DateTime? returnDate)
         {
             var rentedCar = _rentalDal.GetAll(r => r.CarId == carId).Any();
             if (rentedCar)
             {
-                var result = _rentalDal.GetAll(r => r.CarId == carId).LastOrDefault();
-                int range = DateTime.Compare((DateTime)result.ReturnDate, rentDate); // <0 result.ReturnDate daha önce rentDateden
-                if (result.ReturnDate == null || range > 0)
+                var rentedCars = _rentalDal.GetAll(r => r.CarId == carId);
+                foreach (var car in rentedCars)
                 {
-                    return new ErrorResult(Messages.InvalidRental);
+                    int rangeReturnToRent = DateTime.Compare((DateTime)car.ReturnDate, rentDate);
+                    int rangeRentToReturn = DateTime.Compare(car.RentDate, (DateTime)returnDate);
+
+                    if (car.ReturnDate == null || rangeReturnToRent > 0 || rangeRentToReturn > 0)
+                    {
+                        return new ErrorResult(Messages.InvalidRental);
+                    }
                 }
+                // <0 result.ReturnDate daha önce rentDateden
             }
             return new SuccessResult();
         }

@@ -8,6 +8,6 @@ namespace Business.Abstract
 {
     public interface IPaymentService
     {
-        IResult Payment(CreditCard creditCard, decimal RentPrice);
+        IResult Payment(CreditCard creditCard);
     }
 }

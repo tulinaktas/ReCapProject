@@ -25,9 +25,9 @@ namespace WebAPI.Controllers
             var result = _creditCardService.Add(creditCard);
             if (result.Success)
             {
-                return Ok();
+                return Ok(result);
             }
-            return BadRequest();
+            return BadRequest(result);
         }
         [HttpPost("delete")]
         public IActionResult Delete(CreditCard creditCard)
@@ -35,9 +35,9 @@ namespace WebAPI.Controllers
             var result = _creditCardService.Delete(creditCard);
             if (result.Success)
             {
-                return Ok();
+                return Ok(result);
             }
-            return BadRequest();
+            return BadRequest(result);
         }
         [HttpPost("update")]
         public IActionResult Update(CreditCard creditCard)
@@ -45,9 +45,9 @@ namespace WebAPI.Controllers
             var result = _creditCardService.Update(creditCard);
             if (result.Success)
             {
-                return Ok();
+                return Ok(result);
             }
-            return BadRequest();
+            return BadRequest(result);
         }
         [HttpPost("getbycustomerid")]
         public IActionResult GetByCustomerId(int id)
@@ -55,9 +55,20 @@ namespace WebAPI.Controllers
             var result = _creditCardService.GetByCustomerId(id);
             if (result.Success)
             {
-                return Ok();
+                return Ok(result);
             }
-            return BadRequest();
+            return BadRequest(result);
+        }
+
+        [HttpPost("getbynumber")]
+        public IActionResult GetByNumber(string number)
+        {
+            var result = _creditCardService.GetByNumber(number);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }
