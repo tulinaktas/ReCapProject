@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-            return Ok(result.Data);
+            return Ok(result);
         }
 
         [HttpPost("register")]
@@ -48,7 +48,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.Message);
             }
-            return Ok(result.Data);
+            return Ok(result);
         }
     }
 }
