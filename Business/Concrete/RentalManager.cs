@@ -18,17 +18,24 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICustomerService _customerService;
+        ICarService _carService;
+        IFakeFindexService _fakeFindexService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICustomerService customerService, ICarService carService, IFakeFindexService fakeFindexService)
         {
             _rentalDal = rentalDal;
+
+            _customerService = customerService;
+            _carService = carService;
+            _fakeFindexService = fakeFindexService;
         }
 
         [SecuredOperation("admin,rental.add")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = BusinessRules.Run(RentControl(rental.RentDate, rental.ReturnDate), RentedCarBeenReturned(rental.CarId,rental.RentDate,rental.ReturnDate));
+            var result = BusinessRules.Run(RentControl(rental.RentDate, rental.ReturnDate), RentedCarBeenReturned(rental.CarId,rental.RentDate,rental.ReturnDate), FindexControl(rental.CarId, rental.CustomerId));
 
             if (result != null)
             {
@@ -58,6 +65,16 @@ namespace Business.Concrete
         public IDataResult<List<RentalDetailsDto>> GetRentalDetails()
         {
             return new SuccessDataResult<List<RentalDetailsDto>>(_rentalDal.GetRentalDetails());
+        }
+
+        private IResult FindexControl(int carId, int customerId)
+        {
+            var result = _fakeFindexService.CheckFindex(_carService.GetById(carId).Data.MinFindex, _customerService.GetById(customerId).Data.FindexScore);
+            if (result)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
         }
 
         private IResult RentControl(DateTime rentDate, DateTime? returnDate)
